@@ -27,5 +27,4 @@ export async function useFetchAuth<T>(
     }
 
 return response.json() as Promise<T>
-
 }

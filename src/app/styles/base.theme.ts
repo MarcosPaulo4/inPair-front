@@ -40,16 +40,15 @@ const baseTheme = createTheme({
   },
   palette: {
     primary: {
-      main: "#271c19",
-      light: '#fff3ec'
+      main: "#8b4513", 
+      contrastText: "#8b4513CC"
     },
     secondary: {
-      main: "#ffc0ad",
-      contrastText: '#e78fb3'
+      main: "#f0e68c", 
     },
     background: {
-      default: "#271c19", 
-      paper: "#55423d", 
+      default: "#f5f5f5", 
+      paper: "#ffffff", 
     },
     text: {
     primary: "#140d0b", 

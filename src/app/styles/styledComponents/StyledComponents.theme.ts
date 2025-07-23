@@ -26,13 +26,17 @@ export const StyledLink = styled(Link)(({ theme }) => ({
 }));
 
 export const StyledTextField = styled(TextField)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.light,
+  backgroundColor: theme.palette.background.paper,
   fontFamily: theme.typography.h6.fontFamily,
-  borderRadius: 8,
+  borderRadius: 4,
   label: {
-    color: theme.palette.primary.dark,
+    color: '#999',
     fontSize: theme.typography.h6.fontSize,
     fontFamily: theme.typography.h6.fontFamily,
     fontWeight: theme.typography.h6.fontWeight, 
-  },
+    "&:focus":{
+      color: theme.palette.primary.contrastText,
+    }
+  }
+
 }))

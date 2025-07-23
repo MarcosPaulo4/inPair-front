@@ -1,0 +1,19 @@
+{
+  "Global" : {
+    "inPair" :  "InPair",
+    "menu": "Menu" ,
+    "aboutUs": "Sobre nós",
+    "contact": "Contato",
+    "explore" : "explore",
+    "visitUs" : "Visite-nos",
+    "ourLocation" : "nossa localização",
+    "email" : "Email",
+    "password": "Senha",
+    "errorEmailEmpty" : "Email é obrigatório",
+    "errorPasswordEmpty" : "Senha é obrigatória",
+    "successEmail": "Email enviado com sucesso!",
+    "errorEmail": "Ocorreu um erro ao enviar o email.",
+    "send": "Enviar",
+    "sending": "Enviando..."
+}
+}

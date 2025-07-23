@@ -2,12 +2,9 @@ import { decodeJwt } from "jose";
 import { MiddlewareConfig, NextRequest, NextResponse } from "next/server";
 
 const publicRoutes = [
-  { path: '/signIn', whenAuthenticated: 'redirect' },
-  { path: '/register', whenAuthenticated: 'redirect' }
+  { path: /^\/[a-z-]+\/signIn$/, whenAuthenticated: 'redirect' },
+  { path:/^\/[a-z-]+\/signIn$/, whenAuthenticated: 'redirect' }
 ] as const;
-
-
-const REDIRECT_WHEN_NOT_AUTHENTICATED = '/signIn';
 
   const isTokenExpired = (token: string): boolean => {
     try {
@@ -24,8 +21,23 @@ const REDIRECT_WHEN_NOT_AUTHENTICATED = '/signIn';
   }
 
 export function middleware(request: NextRequest) {
-  const path = request.nextUrl.pathname
-  const publicRoute = publicRoutes.find(route => route.path === path)
+  const path = request.nextUrl.pathname;
+  const localeMatch = path.match(/^\/([a-z-]+)\b/)
+  let locale = localeMatch ? localeMatch[1] : null;
+
+  if (!locale) {
+    const acceptLang = request.headers.get('accept-language');
+    if (acceptLang?.startsWith('en')) {
+      locale = 'en';
+    } else {
+      locale = 'pt-br';
+    }
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.pathname = `/${locale}${path}`;
+    return NextResponse.redirect(redirectUrl);
+  }
+  
+  const publicRoute = publicRoutes.find(route => route.path.test(path));
   const authToken = request.cookies.get('token')?.value
   const isExpired = authToken ? isTokenExpired(authToken) : true;
 
@@ -35,7 +47,7 @@ export function middleware(request: NextRequest) {
 
   if (authToken && isExpired && !publicRoute) {
     const redirectUrl = request.nextUrl.clone();
-    redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED;
+    redirectUrl.pathname = `/${locale}/signIn`;
     return NextResponse.redirect(redirectUrl);
   }
 
@@ -45,14 +57,14 @@ export function middleware(request: NextRequest) {
 
   if (!authToken && !publicRoute) {
     const redirectUrl = request.nextUrl.clone()
-    redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED
+     redirectUrl.pathname = `/${locale}/signIn`
 
     return NextResponse.redirect(redirectUrl)
   }
 
   if (authToken && publicRoute) {
     const redirectUrl = request.nextUrl.clone()
-    redirectUrl.pathname = '/Home'
+    redirectUrl.pathname = `/${locale}/Home`
 
     return NextResponse.redirect(redirectUrl)
   }
@@ -61,5 +73,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config: MiddlewareConfig = {
-  matcher: '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)'
+  matcher: '/((?!api|trpc|_next|_vercel|.*\\..*).*)'
 }

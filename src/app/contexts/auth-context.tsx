@@ -1,6 +1,7 @@
 'use client'
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { usePathname } from "next/navigation";
 import { createContext, useContext } from "react";
 import { User } from "../interface/User";
 
@@ -28,6 +29,13 @@ async function fetchUser(): Promise<User | null> {
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const route = pathname.replace(/^\/[a-z-]+/, '');
+
+  const isPublic = publicRoutes.some((publicRoute) =>
+    route.startsWith(publicRoute)
+  );
+
   const queryClient = useQueryClient()
   const {
     data: user,
@@ -35,7 +43,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   } = useQuery<User | null>({
     queryKey: ['auth', 'user'],
     queryFn: fetchUser,
-    enabled: !publicRoutes,
+    enabled: !isPublic,
     retry: false,
   });
 

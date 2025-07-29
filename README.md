@@ -8,6 +8,10 @@
 
 ---
 
+<p align="center">
+<img src="https://github.com/user-attachments/assets/4dff6009-27a2-4335-9794-b4b40533e5da" width="200px"/>
+</p>
+
 ## 🇧🇷 Descrição em Português
 
 **InPair é um projeto feito para estudos**

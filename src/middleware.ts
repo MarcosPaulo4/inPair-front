@@ -1,6 +1,8 @@
 import { decodeJwt } from "jose";
 import { MiddlewareConfig, NextRequest, NextResponse } from "next/server";
 
+const supportedLocales = ['en', 'pt-br'];
+
 const publicRoutes = [
   { path: /^\/[a-z-]+\/signIn$/, whenAuthenticated: 'redirect' },
   { path:/^\/[a-z-]+\/signIn$/, whenAuthenticated: 'redirect' }
@@ -25,13 +27,10 @@ export function middleware(request: NextRequest) {
   const localeMatch = path.match(/^\/([a-z-]+)\b/)
   let locale = localeMatch ? localeMatch[1] : null;
 
-  if (!locale) {
+  if (!locale || !supportedLocales.includes(locale)) {
     const acceptLang = request.headers.get('accept-language');
-    if (acceptLang?.startsWith('en')) {
-      locale = 'en';
-    } else {
-      locale = 'pt-br';
-    }
+    locale = acceptLang?.startsWith('en') ? 'en' : 'pt-br';
+
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = `/${locale}${path}`;
     return NextResponse.redirect(redirectUrl);

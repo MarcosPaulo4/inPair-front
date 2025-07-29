@@ -29,15 +29,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+export default async function LocaleLayout({
   children,
   params
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
+  const { locale } = await params;
 
-  const { locale } = params;
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
@@ -48,7 +48,7 @@ export default async function RootLayout({
         <CoreProvider>
           <ThemeRegistry>
             <AuthProvider>
-              <NextIntlClientProvider locale={locale} >
+              <NextIntlClientProvider>
                 <AlertProvider>
                   {children}
                 </AlertProvider>
@@ -56,7 +56,6 @@ export default async function RootLayout({
             </AuthProvider>
           </ThemeRegistry>
         </CoreProvider>
-
       </body>
     </html>
   );

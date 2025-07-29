@@ -4,9 +4,8 @@ import AlertMessage from "@/app/components/Alert/AlertMessage";
 import theme from "@/app/styles/base.theme";
 import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import ControlForm from "./components/ControlForm";
 
-export default function SignIn() {
+export default function Register() {
   const translate = useTranslations("Global");
 
   return (
@@ -32,7 +31,6 @@ export default function SignIn() {
               {translate("inPair")}
             </Typography>
           </Box>
-          <ControlForm />
         </Box >
       </Box >
     </>

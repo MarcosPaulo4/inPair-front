@@ -48,7 +48,7 @@ const baseTheme = createTheme({
     },
     background: {
       default: "#f5f5f5", 
-      paper: "#ffffff", 
+      paper: "#ffffff",   
     },
     text: {
     primary: "#140d0b", 

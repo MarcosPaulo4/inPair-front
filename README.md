@@ -10,7 +10,7 @@
 
 ## 🇧🇷 Descrição em Português
 
-**InPair é umn projeto feito para estudos de tecnologias**
+**InPair é um projeto feito para estudos**
 
 **InPair** é uma rede social privada focada em conectar pequenos grupos de até 4 pessoas. A proposta é oferecer uma experiência mais íntima e reservada, com recursos como feed, stories, chats e interações típicas de redes sociais, mas em um ambiente fechado. 
 

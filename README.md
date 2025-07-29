@@ -45,8 +45,8 @@ O projeto ainda está em desenvolvimento. As próximas melhorias incluem:
 Clone o repositório e instale as dependências:
 
 ```bash
-git clone https://github.com/seu-usuario/inpair.git
-cd inpair
+git clone https://github.com/seu-usuario/inPair-front.git
+cd inPair-front
 yarn # ou npm install / pnpm install / bun install
 
 ```

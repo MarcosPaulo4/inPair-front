@@ -8,9 +8,13 @@
 
 ---
 
+<p align="center">
+<img src="https://github.com/user-attachments/assets/4dff6009-27a2-4335-9794-b4b40533e5da" width="200px"/>
+</p>
+
 ## 🇧🇷 Descrição em Português
 
-**InPair é umn projeto feito para estudos de tecnologias**
+**InPair é um projeto feito para estudos**
 
 **InPair** é uma rede social privada focada em conectar pequenos grupos de até 4 pessoas. A proposta é oferecer uma experiência mais íntima e reservada, com recursos como feed, stories, chats e interações típicas de redes sociais, mas em um ambiente fechado. 
 
@@ -45,8 +49,8 @@ O projeto ainda está em desenvolvimento. As próximas melhorias incluem:
 Clone o repositório e instale as dependências:
 
 ```bash
-git clone https://github.com/seu-usuario/inpair.git
-cd inpair
+git clone https://github.com/seu-usuario/inPair-front.git
+cd inPair-front
 yarn # ou npm install / pnpm install / bun install
 
 ```

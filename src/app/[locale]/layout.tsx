@@ -48,7 +48,7 @@ export default async function LocaleLayout({
         <CoreProvider>
           <ThemeRegistry>
             <AuthProvider>
-              <NextIntlClientProvider>
+              <NextIntlClientProvider locale={locale}>
                 <AlertProvider>
                   {children}
                 </AlertProvider>

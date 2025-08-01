@@ -1,32 +1,20 @@
 "use client";
 
 import { createTheme } from "@mui/material";
-import { Charm, Geist_Mono, Noto_Serif, Young_Serif } from "next/font/google";
+import { Geist_Mono, Raleway } from "next/font/google";
 
-const notoSerif = Noto_Serif({
-  variable: "--font-lexend",
-  subsets: ["latin"],
-  weight: ["400", "700", "800"],
-
-})
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
-export const charm = Charm({
-  variable: "--font-charm",
-  weight: ["400", "700"],
+export const raleway = Raleway({
+  variable: "--font-raleway",
   subsets: ["latin"],
+  weight: ["500", "700", "800"],
+  style: ["normal", "italic"]
 })
-
-export const youngCherif = Young_Serif({
-  weight: ["400"],  
-  subsets: ["latin"],
-  variable: "--font-young-serif",
-})
-
 
 const baseTheme = createTheme({
   breakpoints: {
@@ -40,23 +28,15 @@ const baseTheme = createTheme({
   },
   palette: {
     primary: {
-      main: "#8b4513", 
-      contrastText: "#8b4513CC"
+      main: "#500208", 
+      contrastText: "#9b010c"
     },
     secondary: {
-      main: "#f0e68c", 
+      main: "#e70011", 
     },
-    background: {
-      default: "#f5f5f5", 
-      paper: "#ffffff",   
-    },
-    text: {
-    primary: "#140d0b", 
-    secondary: "#fffffe",
-  },
   },
   typography: {
-    fontFamily: `${notoSerif.style.fontFamily}, ${geistMono.style.fontFamily}`,
+    fontFamily: `${raleway.style.fontFamily}, ${geistMono.style.fontFamily}`,
   },
 });
 

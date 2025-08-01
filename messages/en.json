@@ -1,19 +1,23 @@
 {
   "Global" : {
-    "inPair" :  "InPair",
-    "menu": "Menu" ,
-    "aboutUs": "Sobre nós",
+    "inPair" : "InPair",
     "contact": "Contato",
     "explore" : "explore",
-    "visitUs" : "Visite-nos",
-    "ourLocation" : "nossa localização",
+      "signIn" : {
+    "login" : "Sign in",
     "email" : "Email",
     "password": "Password",
-    "errorEmailText" : "Por favor preencha um email válido",
+    "errorEmailEmpty" : "Email é obrigatório",
     "errorPasswordEmpty" : "Senha é obrigatória",
     "successEmail": "Email enviado com sucesso!",
     "errorEmail": "Ocorreu um erro ao enviar o email.",
     "send": "Send",
-    "sending": "Enviando..."
+    "newComunity" : "New in our comunity?",
+    "createAccount" : "Register",
+    "loginError" : "Login failed"
+
+    },
+      "register" : {
+    }
 }
 }

@@ -24,7 +24,7 @@ export const FormField = <T extends FieldValues>({
         <StyledTextField
           {...field}
           type={type}
-          variant="filled"
+          variant="outlined"
           label={label}
           placeholder={placeholder}
           size="small"

@@ -1,76 +1,60 @@
 import { decodeJwt } from "jose";
-import { MiddlewareConfig, NextRequest, NextResponse } from "next/server";
+import createMiddleware from "next-intl/middleware";
+import { NextRequest, NextResponse } from "next/server";
+import { routing } from "./i18n/routing";
 
-const supportedLocales = ['en', 'pt-br'];
 
-const publicRoutes = [
-  { path: /^\/[a-z-]+\/signIn$/, whenAuthenticated: 'redirect' },
-  { path:/^\/[a-z-]+\/signIn$/, whenAuthenticated: 'redirect' }
-] as const;
+const publicRoutes = [/^\/[a-z-]+\/signIn$/];
 
-  const isTokenExpired = (token: string): boolean => {
-    try {
-      const { exp } = decodeJwt(token)
-      if (!exp) {
-        return true
-      }
+const isTokenExpired = (token: string): boolean => {
+  try {
+    const { exp } = decodeJwt(token);
+    if (!exp) return true;
 
-      const now = Math.floor(Date.now() / 1000);
-      return exp < now
-    } catch {
-      return true
-    }
+    const now = Math.floor(Date.now() / 1000);
+    return exp < now;
+  } catch {
+    return true;
   }
+};
+
+const intlMiddleware = createMiddleware(routing);
 
 export function middleware(request: NextRequest) {
-  const path = request.nextUrl.pathname;
-  const localeMatch = path.match(/^\/([a-z-]+)\b/)
-  let locale = localeMatch ? localeMatch[1] : null;
+  const pathname = request.nextUrl.pathname;
 
-  if (!locale || !supportedLocales.includes(locale)) {
-    const acceptLang = request.headers.get('accept-language');
-    locale = acceptLang?.startsWith('en') ? 'en' : 'pt-br';
+  const response = intlMiddleware(request) as NextResponse;
 
-    const redirectUrl = request.nextUrl.clone();
-    redirectUrl.pathname = `/${locale}${path}`;
-    return NextResponse.redirect(redirectUrl);
-  }
-  
-  const publicRoute = publicRoutes.find(route => route.path.test(path));
-  const authToken = request.cookies.get('token')?.value
-  const isExpired = authToken ? isTokenExpired(authToken) : true;
+  const localeMatch = pathname.match(/^\/([a-z-]+)\b/);
+  const locale = localeMatch?.[1] ?? routing.defaultLocale;
 
-  if (isExpired && publicRoute) {
-    return NextResponse.next();
-  }
+  const publicRoute = publicRoutes.some((regex) => regex.test(pathname));
+  const token = request.cookies.get("token")?.value;
+  const expired = token ? isTokenExpired(token) : true;
 
-  if (authToken && isExpired && !publicRoute) {
+  if (expired && publicRoute) return response;
+
+  if (!token && !publicRoute) {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = `/${locale}/signIn`;
     return NextResponse.redirect(redirectUrl);
   }
 
-  if (!authToken && publicRoute) {
-    return NextResponse.next()
+  if (token && expired && !publicRoute) {
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.pathname = `/${locale}/signIn`;
+    return NextResponse.redirect(redirectUrl);
   }
 
-  if (!authToken && !publicRoute) {
-    const redirectUrl = request.nextUrl.clone()
-     redirectUrl.pathname = `/${locale}/signIn`
-
-    return NextResponse.redirect(redirectUrl)
+  if (token && publicRoute) {
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.pathname = `/${locale}/Home`;
+    return NextResponse.redirect(redirectUrl);
   }
 
-  if (authToken && publicRoute) {
-    const redirectUrl = request.nextUrl.clone()
-    redirectUrl.pathname = `/${locale}/Home`
-
-    return NextResponse.redirect(redirectUrl)
-  }
-
-  return NextResponse.next()
+  return response;
 }
 
-export const config: MiddlewareConfig = {
-  matcher: '/((?!api|trpc|_next|_vercel|.*\\..*).*)'
-}
+export const config = {
+  matcher: '/((?!api|_next|trpc|.*\\..*).*)',
+};

@@ -1,8 +1,11 @@
 import { useAlert } from "@/app/components/Alert/useAlertProvider"
+import { AnimatedButton } from "@/app/components/AnimatedButton/AnimatedButton"
 import { FormField } from "@/app/components/Form/FormField"
+import { PasswordField } from "@/app/components/Form/PasswordField"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Box, Button } from "@mui/material"
+import { Box } from "@mui/material"
 import { useLocale, useTranslations } from "next-intl"
+import { useState } from "react"
 import { FormProvider, useForm } from "react-hook-form"
 import { ScheduleFormData, schema } from "../schema/signIn.schema"
 import { submitLogin } from "../services/sign-in"
@@ -11,14 +14,15 @@ export default function ControlForm() {
   const { showAlert } = useAlert()
   const translate = useTranslations("Global");
   const locale = useLocale()
+  const [isLoading, setIsLoading] = useState(false)
 
   const fields: {
     text: string;
     name: keyof ScheduleFormData;
     type?: string;
   }[] = [
-      { text: "signIn.email", name: "email", type: "email" },
-      { text: "signIn.password", name: "password", type: "password" },
+      { text: translate("signIn.email"), name: "email", type: "email" },
+      { text: translate("signIn.password"), name: "password" },
     ];
 
   const methods = useForm<ScheduleFormData>({
@@ -30,13 +34,18 @@ export default function ControlForm() {
   })
 
   const handleSubmit = async (data: ScheduleFormData) => {
+    setIsLoading(true)
     try {
-      const result = await submitLogin(data, locale)
+      const result = await submitLogin(data, locale, translate("signIn.loginError"));
       return result;
     } catch {
-      showAlert("Erro ao fazer login", "error");
+      showAlert(translate("signIn.loginError"), "error");
+    } finally {
+      setIsLoading(false);
     }
   }
+
+
 
   return (
     <FormProvider {...methods}>
@@ -45,24 +54,32 @@ export default function ControlForm() {
         onSubmit={methods.handleSubmit(handleSubmit)}
         display="flex"
         flexDirection="column"
-        width="55%"
         gap={4}
       >
         {fields.map((field) => (
-          <Box key={field.name} >
-            <FormField<ScheduleFormData>
-              label={translate(field.text)}
-              control={methods.control}
-              name={field.name}
-              type={field.type}
-            />
+          <Box key={field.name}>
+            {field.name === "password" ? (
+              <PasswordField<ScheduleFormData>
+                label={field.text}
+                name={field.name}
+                control={methods.control}
+              />
+            ) : (
+              <FormField<ScheduleFormData>
+                label={field.text}
+                control={methods.control}
+                name={field.name}
+                type={field.type}
+              />
+            )}
           </Box>
         ))}
-        <Box display="flex" justifyContent="center" alignItems="center" >
-          <Button type="submit" variant="contained">
-            {translate("signIn.send")}
-          </Button>
-        </Box>
+        <AnimatedButton
+          loading={isLoading}
+          text={translate("signIn.send")}
+          variant="contained"
+          type="submit"
+        />
       </Box>
     </FormProvider>
   )

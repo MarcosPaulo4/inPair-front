@@ -1,4 +1,3 @@
-"use client"
 
 import { LogoutButton } from "@/app/components/AnimatedButton/LogoutButton"
 import { Avatar, Box, Typography } from "@mui/material"

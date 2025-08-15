@@ -10,9 +10,9 @@ import { FormProvider, useForm } from "react-hook-form"
 import { ScheduleFormData, schema } from "../schema/signIn.schema"
 import { submitLogin } from "../services/sign-in"
 
-export default function ControlForm() {
+export default function SignInForm() {
   const { showAlert } = useAlert()
-  const translate = useTranslations("Global");
+  const translate = useTranslations("Global.form");
   const locale = useLocale()
   const [isLoading, setIsLoading] = useState(false)
 
@@ -21,8 +21,8 @@ export default function ControlForm() {
     name: keyof ScheduleFormData;
     type?: string;
   }[] = [
-      { text: translate("signIn.email"), name: "email", type: "email" },
-      { text: translate("signIn.password"), name: "password" },
+      { text: translate("email"), name: "email", type: "email" },
+      { text: translate("password"), name: "password" },
     ];
 
   const methods = useForm<ScheduleFormData>({
@@ -36,10 +36,10 @@ export default function ControlForm() {
   const handleSubmit = async (data: ScheduleFormData) => {
     setIsLoading(true)
     try {
-      const result = await submitLogin(data, locale, translate("signIn.loginError"));
+      const result = await submitLogin(data, locale, translate("loginError"));
       return result;
     } catch {
-      showAlert(translate("signIn.loginError"), "error");
+      showAlert(translate("loginError"), "error");
     } finally {
       setIsLoading(false);
     }
@@ -76,7 +76,7 @@ export default function ControlForm() {
         ))}
         <AnimatedButton
           loading={isLoading}
-          text={translate("signIn.send")}
+          text={translate("send")}
           variant="contained"
           type="submit"
         />

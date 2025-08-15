@@ -1,37 +1,86 @@
 "use client"
 
-import AlertMessage from "@/app/components/Alert/AlertMessage";
-import theme from "@/app/styles/base.theme";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Divider, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
+import AlertMessage from "../../../../components/Alert/AlertMessage";
+import RegisterForm from "./components/RegisterForm";
+
 
 export default function Register() {
-  const translate = useTranslations("Global");
+  const translate = useTranslations("Global.form");
 
   return (
     <>
       <AlertMessage />
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh" >
+      <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        flex={1}
+      >
         <Box
-          padding={2}
-          borderRadius={4}
-          border="1px solid"
-          borderColor={theme.palette.primary.main}
-          boxShadow={10}
-          height="60vh"
-          width="40%"
+          component="img"
+          src="/svg/InPairSVG300x66.svg"
+          alt="Logo Inpair"
+          sx={{ width: { xs: "150px", sm: "200px" }, pb: 5 }}
+        />
+        <Box
           display="flex"
-          justifyContent="center"
           alignItems="center"
+          justifyContent="center"
+          borderRadius="24px"
           flexDirection="column"
-          sx={{ backgroundColor: theme.palette.background.paper }}
+          border="1px solid"
+          borderColor="#E5E5E5"
+          boxShadow={10}
+          sx={{
+            width: { xs: "90%", sm: "80%", md: "50%", lg: "40%" },
+            maxWidth: 480,
+            minHeight: 430,
+            px: { xs: 3, sm: 5 },
+          }}
         >
-          <Box paddingBottom={8}>
-            <Typography variant="h3">
-              {translate("inPair")}
-            </Typography>
+          <Box paddingBottom={5}>
+            <Typography variant="h4">{translate("createAccount")}</Typography>
           </Box>
-        </Box >
+          <Box width="100%">
+            <RegisterForm />
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            width: { xs: "90%", sm: "80%", md: "50%", lg: "40%" },
+            maxWidth: 480,
+          }}
+          justifyContent="center"
+          paddingTop={5}
+        >
+          <Divider >
+            <Typography variant="body2" color="textSecondary">
+              {translate('haveAccount')}
+            </Typography>
+          </Divider>
+        </Box>
+        <Box
+          paddingTop={4}
+          sx={{
+            width: { xs: "90%", sm: "80%", md: "50%", lg: "40%" },
+            maxWidth: 480,
+          }}>
+          <Button
+            sx={{
+              borderRadius: "20px",
+              height: "45px",
+              width: "100%"
+            }}
+            type="submit"
+            variant="contained"
+          >
+            {translate("login")}
+          </Button>
+        </Box>
+
       </Box >
     </>
 

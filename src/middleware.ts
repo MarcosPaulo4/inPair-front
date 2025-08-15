@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { routing } from "./i18n/routing";
 
 
-const publicRoutes = [/^\/[a-z-]+\/signIn$/];
+const publicRoutes = [/^\/[a-z-]+\/signIn$/, /^\/[a-z-]+\/register$/];
 
 const isTokenExpired = (token: string): boolean => {
   try {

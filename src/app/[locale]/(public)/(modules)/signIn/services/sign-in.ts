@@ -12,7 +12,7 @@ export const submitLogin = async (data: ScheduleFormData, locale: string, error:
     if (!response.ok) {
       throw new Error(error);
     }
-     window.location.href = `/${locale}/Home`;;
+     window.location.href = `/${locale}/Home`;
   } catch (error) {
      throw error;
   }

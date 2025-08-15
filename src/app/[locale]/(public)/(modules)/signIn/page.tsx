@@ -2,11 +2,15 @@
 
 import AlertMessage from "@/app/components/Alert/AlertMessage";
 import { Box, Button, Divider, Typography } from "@mui/material";
-import { useTranslations } from "next-intl";
-import ControlForm from "./components/ControlForm";
+import { useLocale, useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import SignInForm from "./components/SignInForm";
 
 export default function SignIn() {
-  const translate = useTranslations("Global.signIn");
+  const translate = useTranslations("Global.form");
+  const locale = useLocale()
+  const router = useRouter()
+
 
   return (
     <>
@@ -44,7 +48,7 @@ export default function SignIn() {
             <Typography variant="h4">{translate('login')}</Typography>
           </Box>
           <Box width="100%">
-            <ControlForm />
+            <SignInForm />
           </Box>
         </Box>
         <Box
@@ -75,6 +79,7 @@ export default function SignIn() {
             }}
             type="submit"
             variant="contained"
+            onClick={() => router.push(`/${locale}/register`)}
           >
             {translate("createAccount")}
           </Button>

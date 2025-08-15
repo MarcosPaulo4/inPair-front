@@ -3,9 +3,11 @@
     "inPair" : "InPair",
     "contact": "Contato",
     "explore" : "explore",
-      "signIn" : {
+      "form" : {
     "login" : "Sign in",
     "email" : "Email",
+    "name": "Name",
+    "surname": "Surname",
     "password": "Password",
     "errorEmailEmpty" : "Email é obrigatório",
     "errorPasswordEmpty" : "Senha é obrigatória",
@@ -14,10 +16,10 @@
     "send": "Send",
     "newComunity" : "New in our comunity?",
     "createAccount" : "Register",
-    "loginError" : "Login failed"
-
-    },
-      "register" : {
+    "loginError" : "Login failed",
+    "registeError" : "Register failed",
+    "haveAccount": "Already have an account?",
+    "shouldNotToBeEmpty": "Should not to be empty."
     }
 }
 }

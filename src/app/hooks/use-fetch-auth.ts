@@ -1,4 +1,4 @@
-export async function useFetchAuth<T>(
+export async function fetchAuth<T>(
   input: RequestInfo | URL,
   init?: RequestInit
 ): Promise<T | null> {
@@ -11,7 +11,7 @@ export async function useFetchAuth<T>(
     let response = await makeRequest();
 
     if (response.status === 401) {
-      const refreshResponse = await fetch(`${process.env.API_URL}/refresh`, {
+      const refreshResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/refresh`, {
         method: 'POST',
         credentials: 'include',
       })
@@ -21,7 +21,7 @@ export async function useFetchAuth<T>(
       }
       
       if (!response.ok) {
-           const error = await response.json().catch(() => ({}));
+        const error = await response.json().catch(() => ({}));
         throw new Error(error.message || 'Erro na requisição autenticada');
       }
     }

@@ -1,4 +1,5 @@
 import { routing } from "@/i18n/routing";
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import type { Metadata } from "next";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
@@ -46,15 +47,17 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body>
         <CoreProvider>
-          <ThemeRegistry>
-            <AuthProvider>
-              <NextIntlClientProvider locale={locale}>
-                <AlertProvider>
-                  {children}
-                </AlertProvider>
-              </NextIntlClientProvider>
-            </AuthProvider>
-          </ThemeRegistry>
+          <AppRouterCacheProvider>
+            <ThemeRegistry>
+              <AuthProvider>
+                <NextIntlClientProvider locale={locale}>
+                  <AlertProvider>
+                    {children}
+                  </AlertProvider>
+                </NextIntlClientProvider>
+              </AuthProvider>
+            </ThemeRegistry>
+          </AppRouterCacheProvider>
         </CoreProvider>
       </body>
     </html>
